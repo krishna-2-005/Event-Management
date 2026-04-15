@@ -1,0 +1,17 @@
+body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+.dashboard { display: flex; }
+.sidebar { width: 200px; background: #e74747; color: white; padding: 20px; }
+.sidebar a { color: white; text-decoration: none; display: block; padding: 10px; }
+.sidebar a:hover { background: #555; }
+.sidebar a.active { background: #777; }
+.main-content { flex: 1; padding: 20px; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px; box-sizing: border-box; }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+th { background: #f4f4f4; }
+.success { color: green; }
+.error { color: red; }
+button { padding: 8px 16px; background: #007bff; color: white; border: none; cursor: pointer; }
+button:hover { background: #0056b3; }
