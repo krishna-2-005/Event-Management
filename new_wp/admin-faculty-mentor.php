@@ -354,6 +354,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <td><?php echo htmlspecialchars($proposal['event_date']); ?></td>
                             <td><span class="status status-<?php echo strtolower(str_replace(' ', '-', $proposal['faculty_mentor_status'])); ?>"><?php echo htmlspecialchars($proposal['faculty_mentor_status']); ?></span></td>
                             <td>
+                                <a class="btn btn-info" href="view-white-paper.php?proposal_id=<?php echo (int)$proposal['id']; ?>">View White Paper</a>
                                 <?php if ($proposal['faculty_mentor_status'] === 'Pending' || $proposal['faculty_mentor_status'] === 'Under Review') { ?>
                                     <form method="POST" style="display:inline;">
                                         <input type="hidden" name="proposal_id" value="<?php echo $proposal['id']; ?>">

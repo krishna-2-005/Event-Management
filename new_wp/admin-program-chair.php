@@ -569,6 +569,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td><?php echo htmlspecialchars($proposal['event_date']); ?></td>
                                 <td><span class="badge badge-<?php echo $status_class; ?>"><?php echo htmlspecialchars($proposal['program_chair_status']); ?></span></td>
                                 <td>
+                                    <a class="btn btn-info btn-sm" href="view-white-paper.php?proposal_id=<?php echo (int)$proposal['id']; ?>">View White Paper</a>
                                     <?php if ($proposal['program_chair_status'] === 'Pending') { ?>
                                         <button class="btn btn-success btn-sm" onclick="openActionModal(<?php echo $proposal['id']; ?>, 'approve')">Approve</button>
                                         <button class="btn btn-danger btn-sm" onclick="openActionModal(<?php echo $proposal['id']; ?>, 'reject')">Reject</button>
