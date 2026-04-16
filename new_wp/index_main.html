@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMIMS EventHub - Discover Campus Events</title>
+    <meta name="description" content="Find and register for the best campus events, workshops, competitions, and more at NMIMS University.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c52240;
+            --primary-light: #c73c50;
+            --primary-dark: #7a1526;
+            --secondary: #333333;
+            --secondary-light: #555555;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --success: #38b000;
+            --nmims-red: #9e1b32;
+            --nmims-dark: #292929;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark);
+            line-height: 1.6;
+            background-image: linear-gradient(135deg, rgba(248, 249, 250, 0.85) 0%, rgba(248, 249, 250, 0.85) 100%), url('/api/placeholder/2000/1000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(158, 27, 50, 0.2);
+        }
+
+        .btn-light {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-light:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn i {
+            margin-left: 8px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background-color: var(--nmims-dark);
+            color: white;
+            padding: 8px 0;
+        }
+
+        .top-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-nav-contact {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .top-nav-contact a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .top-nav-contact a:hover {
+            color: white;
+        }
+
+        .top-nav-contact i {
+            margin-right: 6px;
+            font-size: 16px;
+            color: var(--primary-light);
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .top-nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .top-nav-links a:hover {
+            color: white;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .login-btn {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .login-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(158, 27, 50, 0.2);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--secondary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(10deg, rgba(141, 4, 29, 0.901), rgba(198, 4, 40, 0.8)), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            color: rgb(242, 233, 233);
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 70px;
+            position: relative;
+            border-radius: 0 0 30% 30% / 60px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .search-container {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 18px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-container button {
+            background: var(--secondary);
+            color: white;
+            padding: 0 28px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-container button:hover {
+            background: var(--secondary-light);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .hero-stat-label {
+            font-size: 14px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        /* Categories */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 12px;
+            margin-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .categories {
+            margin-bottom: 70px;
+        }
+
+        .category-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-item {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 180px;
+        }
+
+        .category-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-item i {
+            color: var(--primary);
+            font-size: 22px;
+            background: rgba(158, 27, 50, 0.1);
+            height: 50px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .category-item:hover i {
+            background: var(--primary);
+            color: white;
+        }
+
+        .category-item span {
+            font-weight: 500;
+            font-size: 16px;
+            color: var(--secondary);
+        }
+
+        /* Featured Event */
+        .featured-event {
+            margin-bottom: 70px;
+        }
+
+        .featured-banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .featured-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .featured-label {
+            background: var(--primary);
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .featured-banner h3 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .featured-banner p {
+            margin-bottom: 25px;
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        .featured-details {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        .featured-date {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .featured-date-day {
+            background: var(--primary);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .featured-date-number {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .featured-date-month {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .featured-date-time {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .featured-details-list {
+            list-style: none;
+        }
+
+        .featured-details-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .featured-details-item i {
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 18px;
+            width: 24px;
+        }
+
+        .featured-cta {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Events Section */
+        .events {
+            padding: 40px 0 70px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .view-all:hover {
+            color: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        .event-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .event-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .event-date {
+            display: inline-flex;
+            align-items: center;
+            background: var(--light-gray);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .event-date i {
+            margin-right: 5px;
+        }
+
+        .event-category {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(158, 27, 50, 0.1);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .event-category i {
+            margin-right: 5px;
+        }
+
+        .event-card h4 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--secondary);
+            line-height: 1.3;
+        }
+
+        .event-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .event-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .event-info-item {
+            display: flex;
+            align-items: center;
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
+        .event-info-item i {
+            margin-right: 10px;
+            color: var(--primary);
+            width: 16px;
+        }
+
+        .event-card .btn {
+            margin-top: auto;
+        }
+
+        /* Counter Section */
+        .counter-section {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 70px 0;
+            margin: 50px 0 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .counter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/1200/600') center/cover;
+            opacity: 0.1;
+        }
+
+        .counter-container {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .counter-item h3 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .counter-item p {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .counter-item i {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            margin-bottom: 70px;
+        }
+
+        .testimonial-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-quote {
+            color: var(--primary);
+            font-size: 32px;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            opacity: 0.1;
+        }
+
+        .testimonial-content {
+            color: var(--secondary);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .testimonial-author-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .testimonial-author-role {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--nmims-dark);
+            color: white;
+            padding: 70px 0 20px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h4 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-column p {
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .footer-column ul a:hover {
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .footer-column ul a i {
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+            font-size: 18px;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-newsletter {
+            margin-top: 25px;
+        }
+
+        .footer-newsletter p {
+            margin-bottom: 15px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 100%;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .newsletter-form button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: var(--primary-dark);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 99;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(158, 27, 50, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .featured-banner {
+                grid-template-columns: 1fr;
+                padding: 40px 30px;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            .hero-stat-number {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 20px;
+                border-radius: 0 0 30% 30% / 40px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero-stats {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .counter-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .top-nav .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .search-container {
+                flex-direction: column;
+                box-shadow: none;
+            }
+
+            .search-container input {
+                border-radius: 8px;
+                margin-bottom: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .search-container button {
+                border-radius: 8px;
+                padding: 15px;
+            }
+
+            .counter-container {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .top-nav-contact, .top-nav-links {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top visible">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <div class="container">
+            <!-- <div class="top-nav-contact">
+                <a href="tel:+911234567890"><i class="fas fa-phone-alt"></i> +91 123 456 7890</a>
+                <a href="mailto:info@nmims.edu"><i class="fas fa-envelope"></i> info@nmims.edu</a>
+            </div> -->
+            <!-- <div class="top-nav-contact">
+                <a href="tel:+911234567890"><i class="fas fa-phone-alt"></i> +91 123 456 7890</a>
+                <a href="mailto:info@nmims.edu"><i class="fas fa-envelope"></i> info@nmims.edu</a>
+            </div> -->
+            <!-- <div class="top-nav-links">
+                <a href="#"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+            </div> -->
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="SVKM's NMIMS.png" alt="NMIMS EventHub Logo">
+            </a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Events</a>
+                <a href="#" id="category-list">Categories</a>
+                <a href="#">Clubs</a>
+                <a href="#">Calendar</a>
+                <a href="#">Blog</a>
+            </div>
+            <div class="nav-actions">
+                <a href="signup.php">
+                    <button class="login-btn">Login / Register</button>
+                </a>
+                <!-- <a href="your-link-here.html">
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </a> -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Discover Amazing Events at NMIMS</h1>
+            <p>Find and participate in the best events, workshops, competitions, and more happening across all NMIMS campuses.</p>
+            <div class="search-container">
+                <input type="text" placeholder="Search for events, workshops, competitions...">
+                <button><i class="fas fa-search"></i> Search</button>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore by Categories</h2>
+                <p>Find events by type and interests to match what you're looking for</p>
+            </div>
+            <div class="category-list">
+                <div class="category-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Academic</span>
+                </div>
+                
+                <div class="category-item">
+                    <i class="fas fa-music"></i>
+                    <span>Cultural</span>
+                </div>
+                <div class="category-item">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Technical</span>
+                </div>
+                <div class="category-item">
+                    <i class="fas fa-futbol"></i>
+                    <span>Sports</span>
+                </div>
+                <div class="category-item">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Social</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Event Section -->
+    <section class="featured-event">
+        <div class="container">
+            <div class="featured-banner">
+                <div class="featured-content">
+                    <span class="featured-label">Featured Event</span>
+                    <h3>Universal Acceptance For Globally Connected Internet 2025</h3>
+                    <p>Join us for the annual leadership summit featuring industry leaders, innovative thinkers, and change-makers from around the world discussing the future of business and technology.</p>
+                    <div class="featured-cta">
+                        <a href="#" class="btn btn-light">Learn More <i class="fas fa-arrow-right"></i></a>
+                        <a href="#" class="btn btn-primary">Register Now <i class="fas fa-ticket-alt"></i></a>
+                    </div>
+                </div>
+                <div class="featured-details">
+                    <div class="featured-date">
+                        <div class="featured-date-day">
+                            <span class="featured-date-number">28</span>
+                            <span class="featured-date-month">Mar</span>
+                        </div>
+                        <div class="featured-date-time">
+                         9:30 AM - 4:30 PM
+                        </div>
+                    </div>
+                    <ul class="featured-details-list">
+                        <li class="featured-details-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Building 4, Microsoft Hyderabad Campus</span>
+                        </li>
+                        <li class="featured-details-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>20+ Speakers</span>
+                        </li>
+                        <li class="featured-details-item">
+                            <i class="fas fa-users"></i>
+                            <span>Expected 1000+ Attendees</span>
+                        </li>
+                        <li class="featured-details-item">
+                            <i class="fas fa-tag"></i>
+                            <span>Free for NMIMS Students</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events Section -->
+    <section class="events">
+        <div class="container">
+            <div class="section-header">
+                <h2>Upcoming Events</h2>
+                <a href="#" class="view-all">View All Events <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="event-list">
+                <!-- Event 1 -->
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('/api/placeholder/400/200')"></div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span class="event-date">
+                                <i class="far fa-calendar-alt"></i> Mar 18
+                            </span>
+                            <span class="event-category">
+                                <i class="fas fa-tag"></i> Technical
+                            </span>
+                        </div>
+                        <h4>AI & Machine Learning Workshop</h4>
+                        <p>Learn about the latest advances in AI and ML and how they're reshaping industries.</p>
+                        <div class="event-info">
+                            <div class="event-info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>2:00 PM - 5:00 PM</span>
+                            </div>
+                            <div class="event-info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Tech Lab, Mumbai Campus</span>
+                            </div>
+                            <div class="event-info-item">
+                                <i class="fas fa-user-tie"></i>
+                                <span>Prof. Rahul Sharma</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Register Now</a>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('/api/placeholder/400/200')"></div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span class="event-date">
+                                <i class="far fa-calendar-alt"></i> Mar 20
+                            </span>
+                            <span class="event-category">
+                                <i class="fas fa-tag"></i> Business
+                            </span>
+                        </div>
+                        <h4>Entrepreneurship Summit</h4>
+                        <p>Connect with successful entrepreneurs and learn about starting your own business.</p>
+                        <div class="event-info">
+                            <div class="event-info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>10:00 AM - 4:00 PM</span>
+                            </div>
+                            <div class="event-info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Management Hall, Juhu</span>
+                            </div>
+                            <div class="event-info-item">
+                                <i class="fas fa-user-tie"></i>
+                                <span>E-Cell NMIMS</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Register Now</a>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('/api/placeholder/400/200')"></div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span class="event-date">
+                                <i class="far fa-calendar-alt"></i> Mar 22
+                            </span>
+                            <span class="event-category">
+                                <i class="fas fa-tag"></i> Cultural
+                            </span>
+                        </div>
+                        <h4>Cultural Fest - Rhythms 2025</h4>
+                        <p>Annual cultural extravaganza featuring dance, music, art and theatrical performances.</p>
+                        <div class="event-info">
+                            <div class="event-info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>5:00 PM - 10:00 PM</span>
+                            </div>
+                            <div class="event-info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>NMIMS Grounds</span>
+                            </div>
+                            <div class="event-info-item">
+                                <i class="fas fa-user-tie"></i>
+                                <span>Cultural Committee</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Register Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Counter Section
+    <section class="counter-section">
+        <div class="container">
+            <div class="counter-container">
+                <div class="counter-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>500+</h3>
+                    <p>Events Hosted</p>
+                </div>
+                <div class="counter-item">
+                    <i class="fas fa-users"></i>
+                    <h3>50,000+</h3>
+                    <p>Attendees</p>
+                </div>
+                <div class="counter-item">
+                    <i class="fas fa-award"></i>
+                    <h3>100+</h3>
+                    <p>Awards Won</p>
+                </div>
+                <div class="counter-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>15,000+</h3>
+                    <p>Alumni Network</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Student Testimonials</h2>
+                <p>What our students say about the events at NMIMS</p>
+            </div>
+            <div class="testimonial-list">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <p class="testimonial-content">
+                        The Leadership Summit was an incredible experience! I got to interact with industry leaders and gained valuable insights that will definitely help in my career.
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-author-img" style="background-image: url('/api/placeholder/80/80')"></div>
+                        <div>
+                            <div class="testimonial-author-name">Ananya Sharma</div>
+                            <div class="testimonial-author-role">MBA, Class of 2024</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <p class="testimonial-content">
+                        The Tech Hackathon pushed me beyond my comfort zone and helped me develop my coding skills. The mentors were extremely helpful and the prizes were amazing!
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-author-img" style="background-image: url('/api/placeholder/80/80')"></div>
+                        <div>
+                            <div class="testimonial-author-name">Rohit Patel</div>
+                            <div class="testimonial-author-role">BTech IT, Class of 2025</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <p class="testimonial-content">
+                        Participating in the Cultural Fest was one of the highlights of my college life. It gave me a platform to showcase my talents and make lifelong friends.
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-author-img" style="background-image: url('/api/placeholder/80/80')"></div>
+                        <div>
+                            <div class="testimonial-author-name">Priya Desai</div>
+                            <div class="testimonial-author-role">BBA, Class of 2023</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>About EventHub</h4>
+                    <p>NMIMS EventHub is your one-stop platform to discover, register, and participate in all events happening across NMIMS campuses.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Events</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Categories</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Clubs</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Calendar</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Feedback</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Stay Updated</h4>
+                    <p>Subscribe to our newsletter to receive event updates.</p>
+                    <div class="footer-newsletter">
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your Email Address">
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; 2025 NMIMS EventHub. All Rights Reserved.
+                </div>
+                <div class="footer-links">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for back to top button and other functionality -->
+    <script>
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
