@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php';
+require_once __DIR__ . '/inc/app.php';
 
 $stmt = $conn->prepare("SELECT id, club_name FROM clubs ORDER BY club_name");
 $stmt->execute();
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $_POST['role'];
     $sub_role = isset($_POST['sub_role']) ? $_POST['sub_role'] : null;
-    $club_id = ($role === 'head' || ($role === 'admin' && $sub_role === 'faculty-mentor')) ? (int)$_POST['club_id'] : null;
+    $club_id = in_array($role, ['club_head', 'faculty_mentor'], true) ? (int)$_POST['club_id'] : null;
 
     $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
@@ -203,16 +203,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <select name="role" id="role" onchange="toggleSubRole()" required>
                     <option value="">Select Role</option>
                     <option value="student">Student</option>
-                    <option value="head">Club Head</option>
-                    <option value="admin">Admin</option>
+                    <option value="club_head">Club Head</option>
+                    <option value="faculty_mentor">Faculty Mentor</option>
                 </select>
             </div>
             <div class="form-group" id="sub-role-group" style="display: none;">
-                <label>Sub Role (for Admin):</label>
+                <label>Role Detail (for Faculty Mentor):</label>
                 <select name="sub_role" id="sub_role" onchange="toggleClub()">
-                    <option value="">Select Sub Role</option>
+                    <option value="">Select Role Detail</option>
                     <option value="faculty-mentor">Faculty Mentor</option>
-                    <option value="program-chair">Program Chair</option>
                 </select>
             </div>
             <div class="form-group" id="club-group">
@@ -236,9 +235,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const role = document.getElementById('role').value;
             const subRoleGroup = document.getElementById('sub-role-group');
             const clubGroup = document.getElementById('club-group');
-            subRoleGroup.style.display = role === 'admin' ? 'block' : 'none';
-            clubGroup.style.display = role === 'head' ? 'block' : 'none';
-            if (role !== 'admin' && role !== 'head') {
+            subRoleGroup.style.display = role === 'faculty_mentor' ? 'block' : 'none';
+            clubGroup.style.display = role === 'club_head' || role === 'faculty_mentor' ? 'block' : 'none';
+            if (role !== 'faculty_mentor' && role !== 'club_head') {
                 document.getElementById('club_id').required = false;
             }
         }
