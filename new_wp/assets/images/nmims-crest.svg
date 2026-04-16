@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="NMIMS Crest">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#c21834"/>
+      <stop offset="100%" stop-color="#8f1026"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="32" fill="#fff"/>
+  <circle cx="100" cy="100" r="78" fill="url(#g)"/>
+  <circle cx="100" cy="100" r="58" fill="#fff" opacity="0.12"/>
+  <text x="100" y="92" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#ffffff">NM</text>
+  <text x="100" y="124" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#ffffff">IMS</text>
+</svg>
