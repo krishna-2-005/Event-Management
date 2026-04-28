@@ -2,81 +2,12 @@
 session_start();
 require_once __DIR__ . '/inc/app.php';
 
-$hasStatusColumn = app_column_exists('users', 'status');
-$statusSql = $hasStatusColumn ? ' WHERE status = "active"' : '';
-
-$credentialUsers = [];
-$credStmt = $conn->prepare('SELECT id, full_name, email, role FROM users' . $statusSql . ' ORDER BY id ASC');
-if ($credStmt) {
-    $credStmt->execute();
-    $credentialUsers = $credStmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    $credStmt->close();
-}
-
-$usersByRole = [];
-$usersByEmail = [];
-foreach ($credentialUsers as $credentialUser) {
-    $emailKey = strtolower(trim((string) ($credentialUser['email'] ?? '')));
-    $roleKey = trim((string) ($credentialUser['role'] ?? ''));
-
-    if ($emailKey !== '') {
-        $usersByEmail[$emailKey] = $credentialUser;
+$nmimsLogo = 'assets/images/nmimslogo.png';
+if (!file_exists(__DIR__ . '/assets/images/nmimslogo.png')) {
+    $nmimsLogo = 'assets/images/nmimsvertical.jpg';
+    if (!file_exists(__DIR__ . '/assets/images/nmimsvertical.jpg')) {
+        $nmimsLogo = app_nmims_logo_path();
     }
-
-    if ($roleKey !== '' && !isset($usersByRole[$roleKey])) {
-        $usersByRole[$roleKey] = $credentialUser;
-    }
-}
-
-$credentialConfig = [
-    ['label' => 'Super Admin', 'roles' => ['super_admin'], 'preferred_email' => 'superadmin@college.com'],
-    ['label' => 'Club Head (ELGE)', 'roles' => ['club_head'], 'preferred_email' => 'elgehead@college.com'],
-    ['label' => 'Faculty Mentor (ELGE)', 'roles' => ['faculty_mentor'], 'preferred_email' => 'elgementor@college.com'],
-    ['label' => 'School Head (STME)', 'roles' => ['school_head'], 'preferred_email' => 'stmehead@college.com'],
-    ['label' => 'President VC', 'roles' => ['president_vc'], 'preferred_email' => 'president@college.com'],
-    ['label' => 'GS Treasurer', 'roles' => ['gs_treasurer'], 'preferred_email' => 'treasurer@college.com'],
-    ['label' => 'Admin Office', 'roles' => ['admin_office', 'administration_officer', 'administrative_officer'], 'preferred_email' => 'adminoffice@college.com'],
-    ['label' => 'IT Team', 'roles' => ['it_team'], 'preferred_email' => 'it@college.com'],
-    ['label' => 'Housekeeping', 'roles' => ['housekeeping'], 'preferred_email' => 'housekeeping@college.com'],
-    ['label' => 'Security Officer', 'roles' => ['security_officer'], 'preferred_email' => 'security@college.com'],
-    ['label' => 'Purchase Officer', 'roles' => ['purchase_officer'], 'preferred_email' => 'purchase@college.com'],
-    ['label' => 'Accounts Officer', 'roles' => ['accounts_officer'], 'preferred_email' => 'accounts@college.com'],
-    ['label' => 'Sports Department', 'roles' => ['sports_dept', 'sports_department'], 'preferred_email' => 'sports@college.com'],
-    ['label' => 'Food Admin', 'roles' => ['food_admin'], 'preferred_email' => 'foodadmin@college.com'],
-    ['label' => 'Deputy Registrar', 'roles' => ['deputy_registrar'], 'preferred_email' => 'dyregistrar@college.com'],
-    ['label' => 'Director', 'roles' => ['director'], 'preferred_email' => 'director@college.com'],
-    ['label' => 'Student', 'roles' => ['student'], 'preferred_email' => 'student@college.com'],
-    ['label' => 'Rector', 'roles' => ['rector'], 'preferred_email' => null],
-    ['label' => 'Deputy Director', 'roles' => ['deputy_director', 'dy_director'], 'preferred_email' => null],
-];
-
-$loginCredentials = [];
-foreach ($credentialConfig as $config) {
-    $selectedUser = null;
-    $preferredEmail = strtolower(trim((string) ($config['preferred_email'] ?? '')));
-    $allowedRoles = $config['roles'];
-
-    if ($preferredEmail !== '' && isset($usersByEmail[$preferredEmail])) {
-        $candidate = $usersByEmail[$preferredEmail];
-        if (in_array((string) ($candidate['role'] ?? ''), $allowedRoles, true)) {
-            $selectedUser = $candidate;
-        }
-    }
-
-    if ($selectedUser === null) {
-        foreach ($allowedRoles as $allowedRole) {
-            if (isset($usersByRole[$allowedRole])) {
-                $selectedUser = $usersByRole[$allowedRole];
-                break;
-            }
-        }
-    }
-
-    $loginCredentials[] = [
-        'label' => (string) $config['label'],
-        'email' => $selectedUser['email'] ?? 'Not assigned',
-        'name' => $selectedUser['full_name'] ?? 'No active user found',
-    ];
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -158,39 +89,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/app.css">
 </head>
-<body>
+<body class="login-page">
     <div class="login-shell">
         <div class="auth-card">
             <section class="auth-art">
-                <h3 class="cred-title"><i class="fa-solid fa-key"></i> Demo Login Credentials</h3>
-                <div class="cred-grid">
-                    <?php foreach ($loginCredentials as $credential) { ?>
-                        <div class="cred-card">
-                            <p class="cred-role"><?php echo htmlspecialchars($credential['label']); ?></p>
-                            <p class="cred-email"><?php echo htmlspecialchars((string) $credential['email']); ?></p>
-                            <p class="cred-name"><?php echo htmlspecialchars((string) $credential['name']); ?></p>
-                        </div>
-                    <?php } ?>
-                </div>
-                <div class="cred-password-note">
-                    <strong>Password for all roles:</strong> <span>123456</span>
+                <span class="auth-pill">NMIMS Event Portal</span>
+                <h1 class="auth-hero-title">Welcome to NMIMS University</h1>
+                <p class="auth-hero-copy">A single place to manage white paper submissions, approvals, and event publishing with clarity.</p>
+
+                <div class="left-panels">
+                    <div class="auth-quick-list" role="list" aria-label="Event management highlights">
+                        <p class="auth-quick-item" role="listitem">Submit white papers with event details, budget, and service requirements.</p>
+                        <p class="auth-quick-item" role="listitem">Track multi-level approvals with query, reject, and resubmission support.</p>
+                        <p class="auth-quick-item" role="listitem">Publish approved events, manage registrations, and post-event reports.</p>
+                    </div>
+
+                    <div class="auth-art-actions">
+                        <a href="mailto:adminoffice@college.com" class="auth-art-btn">Contact</a>
+                        <a href="index.php" class="auth-art-btn">Portal Home</a>
+                    </div>
+
+                    <p class="auth-art-support">For support, contact your department coordinator or the portal administrator.</p>
                 </div>
             </section>
 
             <section class="auth-form">
-                <div class="brand" style="margin-bottom:18px;">
-                    <div class="brand-mark">NM</div>
-                    <div>
-                        <h2>NMIMS Event Workflow</h2>
-                        <p>Sign in with your assigned role</p>
-                    </div>
+                <div class="auth-logo-wrap">
+                    <img src="<?php echo htmlspecialchars($nmimsLogo); ?>" alt="NMIMS Logo">
                 </div>
-                <h2>Login</h2>
+
+                <h2>Sign In to Continue</h2>
+                <p class="auth-form-copy">Use your assigned role email and password to access your dashboard.</p>
+
                 <?php if (isset($_SESSION['error'])) { echo "<div class='flash error'>" . htmlspecialchars($_SESSION['error']) . "</div>"; unset($_SESSION['error']); } ?>
                 <?php if (isset($_SESSION['success'])) { echo "<div class='flash success'>" . htmlspecialchars($_SESSION['success']) . "</div>"; unset($_SESSION['success']); } ?>
+
                 <form method="POST" class="proposal-form">
                     <div class="field">
-                        <label>Email</label>
+                        <label>Email (Role ID)</label>
                         <input type="email" name="email" required>
                     </div>
                     <div class="field">
@@ -199,12 +135,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <button type="submit" class="btn">Login</button>
                 </form>
-                <div class="auth-links">
-                    Don't have an account? <a href="signup.php">Sign up</a>
-                </div>
+
+                <p class="auth-support">Secure access for students, club heads, approvers, and administrators.</p>
+                <a class="auth-forgot" href="#" onclick="return false;">Forgot Password?</a>
             </section>
         </div>
     </div>
+    <footer class="login-footer">&copy; <?php echo date('Y'); ?> Kuchuru Sai Krishna Reddy - STME. All rights reserved.</footer>
 </body>
 </html>
 <?php $conn->close(); ?>
